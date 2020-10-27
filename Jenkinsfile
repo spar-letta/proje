@@ -1,39 +1,20 @@
-pipeline{
-	agent any
-	
-	  stages {
-		stage ('Compile Stage'){
-		
-			steps{
-				git url : 'https://github.com/spar-letta/proje'
-				withMaven(maven : 'maven'){
-				sh 'mvn clean compile'				
-				}			
-			
-			}		
-		
-		}
-		stage('Testing Stage'){
-		
-			steps{
-				withMaven(maven : 'maven'){
-				sh 'mvn test'				
-				}			
-			
-			}
-		
-		}
-		
-		stage('Deloyment Stage'){
-		
-			steps{
-				withMaven(maven : 'maven'){
-				sh 'mvn deploy'				
-				}			
-			
-			}
-		
-		}
-	}
-	
+pipeline {
+    agent any 
+    stages {
+        stage('Build') { 
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Test') { 
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy') { 
+            steps {
+                sh 'mvn deploy' 
+            }
+        }
+    }
 }
